@@ -1,7 +1,9 @@
 <template>
   <div>
     <Header></Header>
-    <Footer></Footer>
+    <!-- 路由组件出口的地方 -->
+    <router-view></router-view>
+    <Footer v-if="$route.meta.showFooter == true"></Footer>
   </div>
 </template>
 
