@@ -131,4 +131,34 @@
       ```javascript
           <Footer v-if="$route.meta.showFooter == true"></Footer>
       ```
+   6.5 路由传参
+      6.5.1：字符串方式  
+      ```javascript 
+        this.$router.push('/search/' + this.keyWord + '?k=' + this.keyWord.toUpperCase())
+      ```      
+      6.5.2: 模板字符串方式,此处是"`"    
+      ```javascript 
+        this.$router.push(`/search/${this.keyWord}?k=${this.keyWord.toUpperCase()}`) 
+      ```
+      6.5.3：对象方式
+      ```javascript
+        // 路由配置方式   
+        // {
+        //    path: '/search/:keyword',
+        //    component: Search,
+        //    meta: { showFooter: true },
+        //    name: 'search'
+        // }
+        //此处不写路径，而是使用在路由配置处定义的name字段的值
+        this.$router.push({name:"search", params:{keyword:this.keyWord},query:{k:this.keyWord.toUpperCase()}})
+      ```
+      6.5.4 参数接收  
+        a. 接收params方式的参数    
+            ```javascript
+                {{$route.params.keyword}}
+            ```  
+        b. 接收query方式参数  
+            ```javascript    
+                {{$route.query.k}}
+            ```
 ##后端

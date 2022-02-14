@@ -27,9 +27,11 @@ export default new VueRouter({
             meta: { showFooter: true }
         },
         {
-            path: '/search',
+            //第一种: 字符串方式
+            path: '/search/:keyword',
             component: Search,
-            meta: { showFooter: true }
+            meta: { showFooter: true },
+            name: 'search'
         },
         {
             path: '/login',
