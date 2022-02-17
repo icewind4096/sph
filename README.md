@@ -131,7 +131,7 @@
       ```javascript
           <Footer v-if="$route.meta.showFooter == true"></Footer>
       ```
-   6.5 路由传参
+   6.5 路由传参  
       6.5.1：字符串方式  
       ```javascript 
         this.$router.push('/search/' + this.keyWord + '?k=' + this.keyWord.toUpperCase())
@@ -142,14 +142,14 @@
       ```
       6.5.3：对象方式
       ```javascript
-        // 路由配置方式   
-        // {
-        //    path: '/search/:keyword',
-        //    component: Search,
-        //    meta: { showFooter: true },
-        //    name: 'search'
-        // }
-        //此处不写路径，而是使用在路由配置处定义的name字段的值
+        路由配置方式   
+        {
+           path: '/search/:keyword',
+           component: Search,
+           meta: { showFooter: true },
+           name: 'search'
+        }
+        此处不写路径，而是使用在路由配置处定义的name字段的值
         this.$router.push({name:"search", params:{keyword:this.keyWord},query:{k:this.keyWord.toUpperCase()}})
       ```
       6.5.4 参数接收  
@@ -161,4 +161,39 @@
             ```javascript    
                 {{$route.query.k}}
             ```
+   >Ps. 1. 如果路由中的para参数可能存在，也可能不存在， 需要在路由配置时，在占位符后面加个？    
+   ```javascript
+       {
+           path: '/search/:keyword？',       //此处？表示可能存在para参数，也可能不存在para参数
+           component: Search,
+           meta: { showFooter: true },
+           name: 'search'
+        }
+   ```
+       2. 如果para参数为一个空串，则传递undefine
+   `this.$router.push({name:"search", params:{keyword:''||undefined},query:{k:this.keyWord.toUpperCase()}})`
+
+      6.5.5 参数不变情况下，函数式跳转连续两次产生警告  
+      原因：返回了一个promis对象，由于没有传入reject的处理函数，导致警告  
+      处理：覆写默认的push|replace方法，根据条件调用原始的push|replace，当发现没有传递reject函数时，使用内部默认的reject函数，不输出警告。  
+      ```javascript
+         let orginPush = VueRouter.prototype.push;
+         let orginReplace = VueRouter.prototype.replace;
+
+         VueRouter.prototype.push = function(location, resolve, reject){
+           if (resolve && reject){
+               orginPush.call(this, location, resolve, reject)
+            } else {
+               orginPush.call(this, location, ()=>{}, ()=>{})
+            }
+         }
+
+      VueRouter.prototype.replace = function(location, resolve, reject){
+         if (resolve && reject){
+            orginReplace.call(this, location, resolve, reject)
+         } else {
+            orginReplace.call(this, location, ()=>{}, ()=>{})
+         }
+      }
+```
 ##后端

@@ -37,6 +37,7 @@
               type="text"
               id="autocomplete"
               class="input-error input-xxlarge"
+              v-model="keyWord"
           />
           <!-- 编程式导航 -->
           <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">
@@ -52,10 +53,29 @@
 
 export default{
   name: 'Header',
+  data(){
+    return {
+      keyWord: '',
+    }
+  },
   methods: {
+    redirectSuccess(para){
+      console.log('success', para)
+    },
+    redirectError(para){
+      console.log('error', para)
+    },
     // 编程式导航 
     goSearch(){
-      this.$router.push('/search')
+      //路由传递参数
+      //第一种: 字符串方式
+      // this.$router.push('/search/' + this.keyWord + '?k=' + this.keyWord.toUpperCase())
+
+      //第二种: 模板字符串方式
+      // this.$router.push(`/search/${this.keyWord}?k=${this.keyWord.toUpperCase()}`)
+
+      // 第三种：对象方式
+      this.$router.push({name:"search", params:{keyword:this.keyWord},query:{k:this.keyWord.toUpperCase()}}, this.redirectSuccess, this.redirectError)
     }
   }
 }

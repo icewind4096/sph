@@ -10,13 +10,32 @@ import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 
+let orginPush = VueRouter.prototype.push;
+let orginReplace = VueRouter.prototype.replace;
+
+VueRouter.prototype.push = function(location, resolve, reject){
+    if (resolve && reject){
+        orginPush.call(this, location, resolve, reject)
+    } else {
+        orginPush.call(this, location, ()=>{}, ()=>{})
+    }
+}
+
+VueRouter.prototype.replace = function(location, resolve, reject){
+    if (resolve && reject){
+        orginReplace.call(this, location, resolve, reject)
+    } else {
+        orginReplace.call(this, location, ()=>{}, ()=>{})
+    }
+}
+
 //配置路由
 export default new VueRouter({
     //配置路由
     routes: [
         // 重定向规则,如果只输入网站名，定向到Home页面
-        { 
-            path: '/', 
+        {
+            path: '/',
             redirect: '/home',
             // 路由原信息，类似于路由自定义参数
             meta: { showFooter: true }
@@ -28,7 +47,7 @@ export default new VueRouter({
         },
         {
             //第一种: 字符串方式
-            path: '/search/:keyword',
+            path: '/search/:keyword?',
             component: Search,
             meta: { showFooter: true },
             name: 'search'
