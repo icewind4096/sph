@@ -1,13 +1,9 @@
-<template>
-    <div>
-        我是登录页
-    </div>    
+icons.png<template>
+  <div>我是登录页</div>
 </template>
 
 <script>
-export default {
-    
-}
+export default {};
 </script>
 
 <style lang="less" scoped>

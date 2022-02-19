@@ -1,6 +1,4 @@
-# 尚品汇
-
-##前端
+#VUE基础知识
 ### vue-cli脚手架初始化  
     node + webpack + 淘宝镜像  
     建立项目 `vue create 项目名称`  
@@ -53,28 +51,38 @@
    `npm install --save less less-loader@5 `  
    >如果组件识别less样式，必须在style标签上加上lang=less    
    `<style lang="less">`
-5. 使用组件步骤  
-   5.1 定义
-   
-   5.2 引入  
-      import 组件名 from '组件文件/目录'
-      ```javascript
-         import Headder from './components/Header'
-      ```
-   5.3 注册  
-      components: {  
-         组件名  
-      }  
-      ```javascript
-      components: {
-         Header
-      }
-   ```
-   5.4 使用
-      <组件名></组件名>  
-      ```javascript
-         <Header></Header>
-      ```
+5. 使用组件步骤
+   5.1 局部组件  
+      5.1.1 定义  
+      5.1.2 引入    
+         import 组件名 from '组件文件/目录'    
+         ```javascript  
+            import Headder from './components/Header'  
+         ```  
+      5.1.3 注册    
+         components: {    
+            组件名    
+         }    
+         ```javascript
+         components: {
+            Header
+         }
+         ```  
+      5.1.4 使用
+         <组件名></组件名>  
+         ```javascript
+            <Header></Header>
+         ```  
+   5.2 全局组件  
+      5.2.1 定义
+      5.2.2 引入    
+         ```javascript
+            import 组件名 from '组件目录'
+         ```
+      5.2.3 使用  
+         ```javascript
+            Vue.component(组件类型.name, 组件类型)
+         ```
 6. 路由搭建(vue-router)  
    6.1 安装   
    使用3.5.3版本，高版本的有问题  
@@ -196,4 +204,8 @@
          }
       }
 ```
+
+##前端
+   
+
 ##后端
